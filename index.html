@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#07080c">
+
 <title>SpaedrNG VPN</title>
 
 <style>
@@ -19,6 +20,7 @@ body{
     display:flex;
     align-items:center;
     justify-content:center;
+
     background:
         radial-gradient(
             circle at 50% 30%,
@@ -26,14 +28,16 @@ body{
             transparent 38%
         ),
         #07080c;
+
     color:#fff;
     font-family:Tahoma,Arial,sans-serif;
 }
 
 .app{
     width:min(430px,94vw);
-    min-height:650px;
-    padding:30px 22px;
+    min-height:680px;
+
+    padding:28px 20px;
 
     border:1px solid #292d38;
     border-radius:28px;
@@ -47,7 +51,10 @@ body{
     flex-direction:column;
     align-items:center;
     justify-content:space-between;
+
+    gap:14px;
 }
+
 
 /* LOGO */
 
@@ -75,12 +82,14 @@ body{
 
 .logo h1{
     margin-top:13px;
+
     font-size:27px;
     letter-spacing:1px;
 }
 
 .logo p{
     margin-top:6px;
+
     color:#8e94a3;
     font-size:12px;
 }
@@ -131,18 +140,20 @@ body{
 /* SERVER COUNT */
 
 .serverCount{
-    margin-top:12px;
+    margin-top:11px;
 
     display:inline-flex;
     align-items:center;
     justify-content:center;
+
     gap:5px;
 
-    padding:7px 14px;
+    padding:7px 15px;
 
     border-radius:12px;
 
     background:#171a23;
+
     border:1px solid #292d38;
 
     color:#ff3340;
@@ -164,6 +175,7 @@ body{
 
 .label{
     color:#8e94a3;
+
     font-size:12px;
 
     margin-bottom:8px;
@@ -182,6 +194,7 @@ body{
     border:1px solid #303440;
 
     background:#171a23;
+
     color:#fff;
 
     font-family:inherit;
@@ -202,8 +215,8 @@ body{
 /* CONNECT */
 
 .connectBtn{
-    width:190px;
-    height:190px;
+    width:180px;
+    height:180px;
 
     border-radius:50%;
 
@@ -219,6 +232,7 @@ body{
     color:#fff;
 
     font-family:inherit;
+
     font-size:21px;
     font-weight:bold;
 
@@ -244,12 +258,94 @@ body{
 }
 
 
+/* IMPORT */
+
+.importBox{
+    width:100%;
+
+    padding:14px;
+
+    border-radius:16px;
+
+    background:#171a23;
+
+    border:1px solid #292d38;
+}
+
+.importTitle{
+    font-size:13px;
+    font-weight:bold;
+
+    margin-bottom:9px;
+}
+
+.importInput{
+    width:100%;
+
+    min-height:70px;
+
+    resize:none;
+
+    padding:11px;
+
+    border-radius:12px;
+
+    border:1px solid #303440;
+
+    background:#101219;
+
+    color:#fff;
+
+    font-family:Arial,sans-serif;
+
+    font-size:11px;
+
+    direction:ltr;
+
+    outline:none;
+}
+
+.importInput:focus{
+    border-color:#e50914;
+}
+
+.importBtn{
+    width:100%;
+
+    height:43px;
+
+    margin-top:9px;
+
+    border:0;
+
+    border-radius:12px;
+
+    background:#e50914;
+
+    color:#fff;
+
+    font-family:inherit;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.importBtn:active{
+    transform:scale(.97);
+}
+
+
 /* ACTIVE CONFIG */
 
 .active{
     width:100%;
 
-    padding:14px;
+    padding:13px;
 
     border-radius:15px;
 
@@ -299,18 +395,19 @@ body{
 @media(max-width:430px){
 
     .app{
-        min-height:630px;
-        padding:25px 18px;
+        min-height:670px;
+        padding:24px 17px;
     }
 
     .connectBtn{
-        width:175px;
-        height:175px;
+        width:165px;
+        height:165px;
     }
 
     .logo h1{
         font-size:24px;
     }
+
 }
 </style>
 </head>
@@ -358,17 +455,14 @@ body{
             class="serverName"
             id="serverName">
 
-            هیچ کانفیگی فعال نیست
+            آماده اتصال
 
         </div>
-
-
-        <!-- SERVER COUNT -->
 
         <div class="serverCount">
 
             <span id="serverCount">
-                ۲
+                ۳
             </span>
 
             <small>
@@ -380,7 +474,7 @@ body{
     </div>
 
 
-    <!-- CONFIG SELECTOR -->
+    <!-- SERVER SELECT -->
 
     <div class="selector">
 
@@ -391,14 +485,6 @@ body{
         <select
             id="configSelect"
             class="select">
-
-            <option value="0">
-                🕷️ سرور ۱
-            </option>
-
-            <option value="1">
-                🕷️ سرور ۲
-            </option>
 
         </select>
 
@@ -417,7 +503,32 @@ body{
     </button>
 
 
-    <!-- ACTIVE CONFIG -->
+    <!-- IMPORT -->
+
+    <div class="importBox">
+
+        <div class="importTitle">
+            📥 ایمپورت کانفیگ
+        </div>
+
+        <textarea
+            id="importInput"
+            class="importInput"
+            placeholder="VLESS را اینجا وارد کنید..."></textarea>
+
+        <button
+            id="importBtn"
+            class="importBtn"
+            type="button">
+
+            افزودن کانفیگ
+
+        </button>
+
+    </div>
+
+
+    <!-- ACTIVE -->
 
     <div
         id="activeBox"
@@ -463,23 +574,30 @@ body{
 <script>
 
 /* =========================
-   VLESS CONFIGS
+   DEFAULT CONFIGS
 ========================= */
 
 const configs = [
 
     {
-        name: "🕷️ سرور ۱",
+        name:"🕷️ سرور ۱",
 
         vless:
-        "vless://50414e45-4c5f-5a45-5553-2082bb32c0c0@9azpnde0ubts.nova-708ad7eaa455.workers.dev:2053?path=%2Fstream%2FPANEL_ZEUS%2F2082bb32c0c0&security=tls&encryption=none&host=9azpnde0ubts.nova-708ad7eaa455.workers.dev&type=ws&insecure=0&fp=unsafe&allowInsecure=0&sni=9azpnde0ubts.nova-708ad7eaa455.workers.dev&fm=%7B%22tcp%22%3A%20%5B%7B%22type%22%3A%20%22fragment%22%2C%22settings%22%3A%7B%22packets%22%3A%22tlshello%22%2C%22lengths%22%3A%5B%220%22%2C%22104%22%2C%221%22%5D%2C%22delays%22%3A%5B%220%22%5D%2C%22maxSplit%22%3A%220%22%7D%7D%2C%7B%22type%22%3A%22fragment%22%2C%22settings%22%3A%7B%22packets%22%3A%221-1%22%2C%22lengths%22%3A%5B%22114%22%2C%221%22%5D%2C%22delays%22%3A%5B%221%22%5D%2C%22maxSplit%22%3A%2211%22%7D%7D%5D%7D&cs=TLS_AES_256_GCM_SHA384%3ATLS_CHACHA20_POLY1305_SHA256%3ATLS_AES_128_GCM_SHA256%3ATLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384%3ATLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384%3ATLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256%3ATLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256%3ATLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256%3ATLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256%3ATLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA%3ATLS_ECDHE_RSA_WITH_AES_256_CBC_SHA%3ATLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256%3ATLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256#SpaedrNG"
+        "vless://50414e45-4c5f-5a45-5553-2082bb32c0c0@9azpnde0ubts.nova-708ad7eaa455.workers.dev:2053?path=%2Fstream%2FPANEL_ZEUS%2F2082bb32c0c0&security=tls&encryption=none&host=9azpnde0ubts.nova-708ad7eaa455.workers.dev&type=ws&insecure=0&fp=unsafe&allowInsecure=0&sni=9azpnde0ubts.nova-708ad7eaa455.workers.dev#SpaedrNG"
     },
 
     {
-        name: "🕷️ سرور ۲",
+        name:"🕷️ سرور ۲",
 
         vless:
-        "vless://50414e45-4c5f-5a45-5553-2082bb32c0c0@9azpnde0ubts.nova-708ad7eaa455.workers.dev:2083?path=%2Fstream%2FPANEL_ZEUS%2F2082bb32c0c0&security=tls&encryption=none&host=9azpnde0ubts.nova-708ad7eaa455.workers.dev&type=ws&insecure=0&fp=unsafe&allowInsecure=0&sni=9azpnde0ubts.nova-708ad7eaa455.workers.dev&fm=%7B%22tcp%22%3A%20%5B%7B%22type%22%3A%20%22fragment%22%2C%22settings%22%3A%7B%22packets%22%3A%22tlshello%22%2C%22lengths%22%3A%5B%220%22%2C%22104%22%2C%221%22%5D%2C%22delays%22%3A%5B%220%22%5D%2C%22maxSplit%22%3A%220%22%7D%7D%2C%7B%22type%22%3A%22fragment%22%2C%22settings%22%3A%7B%22packets%22%3A%221-1%22%2C%22lengths%22%3A%5B%22114%22%2C%221%22%5D%2C%22delays%22%3A%5B%221%22%5D%2C%22maxSplit%22%3A%2211%22%7D%7D%5D%7D&cs=TLS_AES_256_GCM_SHA384%3ATLS_CHACHA20_POLY1305_SHA256%3ATLS_AES_128_GCM_SHA256%3ATLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384%3ATLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384%3ATLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256%3ATLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256%3ATLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256%3ATLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256%3ATLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA%3ATLS_ECDHE_RSA_WITH_AES_256_CBC_SHA%3ATLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256%3ATLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256#SpaedrNG"
+        "vless://50414e45-4c5f-5a45-5553-2082bb32c0c0@9azpnde0ubts.nova-708ad7eaa455.workers.dev:2083?path=%2Fstream%2FPANEL_ZEUS%2F2082bb32c0c0&security=tls&encryption=none&host=9azpnde0ubts.nova-708ad7eaa455.workers.dev&type=ws&insecure=0&fp=unsafe&allowInsecure=0&sni=9azpnde0ubts.nova-708ad7eaa455.workers.dev#SpaedrNG"
+    },
+
+    {
+        name:"🕷️ سرور ۳",
+
+        vless:
+        "vless://b30e1d14-0a07-4da0-a8fb-575fa11e2ca8@amirxf-production.up.railway.app:443?encryption=none&security=tls&type=ws&host=amirxf-production.up.railway.app&path=%2Fws%2Fb30e1d14-0a07-4da0-a8fb-575fa11e2ca8&sni=amirxf-production.up.railway.app&fp=chrome&alpn=http/1.1#SpaedrNG"
     }
 
 ];
@@ -513,6 +631,12 @@ const activeName =
 const serverCount =
     document.getElementById("serverCount");
 
+const importInput =
+    document.getElementById("importInput");
+
+const importBtn =
+    document.getElementById("importBtn");
+
 
 /* =========================
    STATE
@@ -522,13 +646,43 @@ let connected = false;
 
 
 /* =========================
+   RENDER SERVERS
+========================= */
+
+function renderServers(){
+
+    configSelect.innerHTML = "";
+
+    configs.forEach(function(config,index){
+
+        const option =
+            document.createElement("option");
+
+        option.value = index;
+
+        option.textContent =
+            config.name;
+
+        configSelect.appendChild(option);
+
+    });
+
+    serverCount.textContent =
+        configs.length;
+
+}
+
+
+/* =========================
    UPDATE SERVER
 ========================= */
 
 function updateServer(){
 
     const selected =
-        configs[Number(configSelect.value)];
+        configs[
+            Number(configSelect.value)
+        ];
 
     if(!selected) return;
 
@@ -539,7 +693,7 @@ function updateServer(){
 
 
 /* =========================
-   CONFIG CHANGE
+   SELECT CHANGE
 ========================= */
 
 configSelect.addEventListener(
@@ -549,11 +703,8 @@ configSelect.addEventListener(
         if(connected){
 
             alert(
-                "ابتدا اتصال فعلی را قطع کنید، سپس سرور را تغییر دهید."
+                "ابتدا اتصال فعلی را قطع کنید."
             );
-
-            this.value =
-                "0";
 
             return;
         }
@@ -565,7 +716,7 @@ configSelect.addEventListener(
 
 
 /* =========================
-   CONNECT / DISCONNECT
+   CONNECT BUTTON
 ========================= */
 
 connectBtn.addEventListener(
@@ -592,14 +743,24 @@ connectBtn.addEventListener(
 
 function connect(){
 
-    const index =
-        Number(configSelect.value);
-
     const selected =
-        configs[index];
+        configs[
+            Number(configSelect.value)
+        ];
 
     if(!selected) return;
 
+
+    statusText.textContent =
+        "در حال انتقال...";
+
+    serverName.textContent =
+        selected.name;
+
+
+    /*
+     * ارسال کانفیگ به V2RayNG
+     */
 
     const v2rayngURL =
         "v2rayng://install-config?url=" +
@@ -608,24 +769,9 @@ function connect(){
         );
 
 
-    statusText.textContent =
-        "در حال اتصال...";
-
-    serverName.textContent =
-        selected.name;
-
-
-    /*
-     * باز کردن V2RayNG
-     */
-
     window.location.href =
         v2rayngURL;
 
-
-    /*
-     * تغییر رابط کاربری
-     */
 
     setTimeout(function(){
 
@@ -679,7 +825,7 @@ function disconnect(){
         "قطع";
 
     serverName.textContent =
-        "هیچ کانفیگی فعال نیست";
+        "آماده اتصال";
 
     activeBox.classList.add(
         "off"
@@ -702,11 +848,127 @@ function disconnect(){
 
 
 /* =========================
-   INITIAL STATE
+   IMPORT CONFIG
 ========================= */
 
-serverCount.textContent =
-    configs.length;
+importBtn.addEventListener(
+    "click",
+    function(){
+
+        const value =
+            importInput.value.trim();
+
+
+        if(!value){
+
+            alert(
+                "لطفاً یک کانفیگ VLESS وارد کنید."
+            );
+
+            return;
+        }
+
+
+        if(
+            !value.startsWith("vless://")
+        ){
+
+            alert(
+                "فقط کانفیگ VLESS قابل قبول است."
+            );
+
+            return;
+        }
+
+
+        /*
+         * جلوگیری از کانفیگ تکراری
+         */
+
+        const duplicate =
+            configs.some(function(config){
+
+                return config.vless === value;
+
+            });
+
+
+        if(duplicate){
+
+            alert(
+                "این کانفیگ قبلاً اضافه شده است."
+            );
+
+            return;
+        }
+
+
+        /*
+         * نام کانفیگ
+         */
+
+        let name =
+            "🕷️ سرور " +
+            (configs.length + 1);
+
+
+        /*
+         * استفاده از نام بعد از #
+         */
+
+        try{
+
+            const hash =
+                decodeURIComponent(
+                    value.split("#")[1] || ""
+                );
+
+            if(hash){
+
+                name =
+                    "🕷️ " + hash;
+
+            }
+
+        }catch(e){}
+
+
+        configs.push({
+
+            name:name,
+
+            vless:value
+
+        });
+
+
+        renderServers();
+
+
+        configSelect.value =
+            String(configs.length - 1);
+
+
+        updateServer();
+
+
+        importInput.value =
+            "";
+
+
+        alert(
+            "کانفیگ با موفقیت اضافه شد."
+        );
+
+    }
+);
+
+
+/* =========================
+   INITIALIZE
+========================= */
+
+renderServers();
 
 updateServer();
 
