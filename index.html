@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07080c">
+<title>SpaedrNG VPN</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        radial-gradient(circle at 50% 30%,rgba(229,9,20,.14),transparent 38%),
+        #07080c;
+    color:#fff;
+    font-family:Tahoma,Arial,sans-serif;
+}
+
+.app{
+    width:min(430px,94vw);
+    min-height:650px;
+    padding:30px 22px;
+    border:1px solid #292d38;
+    border-radius:28px;
+    background:#11131a;
+    box-shadow:0 25px 80px rgba(0,0,0,.65);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    text-align:center;
+}
+
+.logoIcon{
+    width:72px;
+    height:72px;
+    border-radius:22px;
+    background:#171a23;
+    border:1px solid #373b47;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:38px;
+    margin:auto;
+}
+
+.logo h1{
+    margin-top:13px;
+    font-size:27px;
+    letter-spacing:1px;
+}
+
+.logo p{
+    margin-top:6px;
+    color:#8e94a3;
+    font-size:12px;
+}
+
+/* STATUS */
+
+.statusBox{
+    text-align:center;
+}
+
+.status{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.dot{
+    display:inline-block;
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:#e50914;
+    margin-left:7px;
+    box-shadow:0 0 14px rgba(229,9,20,.7);
+}
+
+.statusBox.connected .dot{
+    background:#20d66b;
+    box-shadow:0 0 15px rgba(32,214,107,.75);
+}
+
+.serverName{
+    margin-top:10px;
+    color:#8e94a3;
+    font-size:13px;
+}
+
+/* SELECT */
+
+.selector{
+    width:100%;
+}
+
+.label{
+    color:#8e94a3;
+    font-size:12px;
+    margin-bottom:8px;
+    display:block;
+}
+
+.select{
+    width:100%;
+    height:54px;
+    padding:0 15px;
+    border-radius:15px;
+    border:1px solid #303440;
+    background:#171a23;
+    color:#fff;
+    font-family:inherit;
+    font-size:14px;
+    outline:none;
+}
+
+.select:focus{
+    border-color:#e50914;
+}
+
+.select:disabled{
+    opacity:.5;
+}
+
+/* CONNECT */
+
+.connectBtn{
+    width:190px;
+    height:190px;
+    border-radius:50%;
+    border:1px solid #3a3e49;
+    background:
+        radial-gradient(circle,#181b24,#101219 70%);
+    color:#fff;
+    font-family:inherit;
+    font-size:21px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:
+        0 0 0 8px rgba(229,9,20,.035),
+        0 0 55px rgba(229,9,20,.13);
+    transition:.25s;
+}
+
+.connectBtn:active{
+    transform:scale(.96);
+}
+
+.connectBtn.connected{
+    border-color:#20d66b;
+    box-shadow:
+        0 0 0 8px rgba(32,214,107,.035),
+        0 0 55px rgba(32,214,107,.18);
+}
+
+/* ACTIVE CONFIG */
+
+.active{
+    width:100%;
+    padding:14px;
+    border-radius:15px;
+    background:#171a23;
+    border:1px solid #292d38;
+    text-align:center;
+}
+
+.activeTitle{
+    color:#777e8d;
+    font-size:11px;
+    margin-bottom:5px;
+}
+
+.activeName{
+    font-size:14px;
+    font-weight:bold;
+}
+
+.active.off{
+    opacity:.55;
+}
+
+.footer{
+    color:#5f6573;
+    font-size:10px;
+    text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <div class="logo">
+        <div class="logoIcon">🕷️</div>
+        <h1>SpaedrNG</h1>
+        <p>VLESS VPN</p>
+    </div>
+
+
+    <!-- STATUS -->
+
+    <div class="statusBox" id="statusBox">
+
+        <div class="status">
+            <span class="dot"></span>
+            <span id="statusText">قطع</span>
+        </div>
+
+        <div class="serverName" id="serverName">
+            هیچ کانفیگی فعال نیست
+        </div>
+
+    </div>
+
+
+    <!-- CONFIG SELECTOR -->
+
+    <div class="selector">
+
+        <span class="label">
+            انتخاب کانفیگ
+        </span>
+
+        <select
+            id="configSelect"
+            class="select">
+
+            <option value="0">
+                🇺🇸 Server 1
+            </option>
+
+            <option value="1">
+                🇫🇮 Finland
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- CONNECT -->
+
+    <button
+        id="connectBtn"
+        class="connectBtn">
+
+        اتصال
+
+    </button>
+
+
+    <!-- ACTIVE CONFIG -->
+
+    <div
+        id="activeBox"
+        class="active off">
+
+        <div class="activeTitle">
+            کانفیگ فعال
+        </div>
+
+        <div
+            id="activeName"
+            class="activeName">
+
+            هیچ کانفیگی فعال نیست
+
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+        SpaedrNG • V2RayNG
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   VLESS CONFIGS
+========================= */
+
+const configs = [
+
+    {
+        name: "🇺🇸 Server 1",
+
+        vless:
+        "vless://8453bdb7-dd58-419d-b002-9456dd2e73d7@199.232.78.159:443?encryption=none&type=ws&security=tls&path=%2F&host=pan2e.global.ssl.fastly.net&sni=ssl.fastly.com&insecure=0&allowInsecure=0#SpaedrNG-1"
+    },
+
+    {
+        name: "🇫🇮 Finland",
+
+        vless:
+        "vless://064e4f7e-726b-4557-b2b0-14fcd0837fb2@fl.masterpgd.com:6002?encryption=mlkem768x25519plus.random.0rtt.UY_GBUMkB0Dy_vjn2rqlskNSa8O4uMFlUSk9_KkSEVI&security=none&type=xhttp&headerType=none&flow=xtls-rprx-vision&path=%2Fassets&host=cafebazaar.ir&mode=packet-up#Finland-NimBaha"
+    }
+
+];
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const connectBtn =
+    document.getElementById("connectBtn");
+
+const configSelect =
+    document.getElementById("configSelect");
+
+const statusBox =
+    document.getElementById("statusBox");
+
+const statusText =
+    document.getElementById("statusText");
+
+const serverName =
+    document.getElementById("serverName");
+
+const activeBox =
+    document.getElementById("activeBox");
+
+const activeName =
+    document.getElementById("activeName");
+
+
+/* =========================
+   STATE
+========================= */
+
+let connected = false;
+
+
+/* =========================
+   CONFIG CHANGE
+========================= */
+
+configSelect.addEventListener("change", function(){
+
+    if(connected){
+
+        alert(
+            "ابتدا اتصال فعلی را قطع کنید، سپس کانفیگ را تغییر دهید."
+        );
+
+        return;
+    }
+
+    const selected =
+        configs[Number(this.value)];
+
+    serverName.textContent =
+        selected.name;
+
+});
+
+
+/* =========================
+   CONNECT / DISCONNECT
+========================= */
+
+connectBtn.addEventListener("click", function(){
+
+    if(connected){
+
+        disconnect();
+
+    }else{
+
+        connect();
+
+    }
+
+});
+
+
+/* =========================
+   CONNECT
+========================= */
+
+function connect(){
+
+    const index =
+        Number(configSelect.value);
+
+    const selected =
+        configs[index];
+
+    /*
+     * ارسال کانفیگ به V2RayNG
+     */
+
+    const v2rayngURL =
+        "v2rayng://install-config?url=" +
+        encodeURIComponent(selected.vless);
+
+
+    statusText.textContent =
+        "در حال اتصال...";
+
+    serverName.textContent =
+        selected.name;
+
+
+    /*
+     * باز کردن V2RayNG
+     */
+
+    window.location.href =
+        v2rayngURL;
+
+
+    /*
+     * تغییر وضعیت رابط
+     */
+
+    setTimeout(function(){
+
+        connected = true;
+
+        statusBox.classList.add("connected");
+
+        statusText.textContent =
+            "متصل";
+
+        serverName.textContent =
+            selected.name + " • فعال";
+
+        activeBox.classList.remove("off");
+
+        activeName.textContent =
+            selected.name;
+
+        connectBtn.classList.add("connected");
+
+        connectBtn.textContent =
+            "قطع";
+
+        configSelect.disabled = true;
+
+    },1200);
+
+}
+
+
+/* =========================
+   DISCONNECT
+========================= */
+
+function disconnect(){
+
+    connected = false;
+
+    statusBox.classList.remove("connected");
+
+    statusText.textContent =
+        "قطع";
+
+    serverName.textContent =
+        "هیچ کانفیگی فعال نیست";
+
+    activeBox.classList.add("off");
+
+    activeName.textContent =
+        "هیچ کانفیگی فعال نیست";
+
+    connectBtn.classList.remove("connected");
+
+    connectBtn.textContent =
+        "اتصال";
+
+    configSelect.disabled = false;
+
+    /*
+     * نکته:
+     * HTML به تنهایی دسترسی مستقیم به
+     * سرویس VPN فعال V2RayNG ندارد.
+     *
+     * بنابراین این قسمت وضعیت رابط را قطع می‌کند.
+     * قطع واقعی تونل باید توسط V2RayNG انجام شود.
+     */
+
+}
+
+
+/* =========================
+   INITIAL STATE
+========================= */
+
+serverName.textContent =
+    "آماده اتصال";
+
+</script>
+
+</body>
+  </html>
