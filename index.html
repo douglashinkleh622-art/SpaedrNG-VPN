@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07080c">
 
-<title>SpaedrNG VPN</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color"
+      content="#121116">
+
+<title>Dark VPN</title>
 
 <style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -15,100 +26,444 @@
     -webkit-tap-highlight-color:transparent;
 }
 
+html,
 body{
+    width:100%;
+    min-height:100%;
+}
+
+body{
+    background:#121116;
+    color:#fff;
+    font-family:
+        Tahoma,
+        Arial,
+        sans-serif;
+    overflow-x:hidden;
+}
+
+button,
+select,
+textarea{
+    font-family:inherit;
+}
+
+
+/* =====================================================
+   APP
+===================================================== */
+
+.app{
+    width:100%;
+    max-width:500px;
     min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    margin:auto;
+    position:relative;
+    overflow:hidden;
 
     background:
         radial-gradient(
             circle at 50% 30%,
-            rgba(229,9,20,.14),
-            transparent 38%
+            rgba(125,82,225,.08),
+            transparent 30%
         ),
-        #07080c;
-
-    color:#fff;
-    font-family:Tahoma,Arial,sans-serif;
-}
-
-.app{
-    width:min(430px,94vw);
-    min-height:680px;
-
-    padding:28px 20px;
-
-    border:1px solid #292d38;
-    border-radius:28px;
-
-    background:#11131a;
-
-    box-shadow:
-        0 25px 80px rgba(0,0,0,.65);
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:space-between;
-
-    gap:14px;
+        #121116;
 }
 
 
-/* LOGO */
+/* =====================================================
+   BACKGROUND PURPLE BLOBS
+===================================================== */
 
-.logo{
-    text-align:center;
+.blob{
+    position:absolute;
+    z-index:0;
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #563fd1 0%,
+            #7048dc 45%,
+            #a34dc8 100%
+        );
+
+    opacity:.95;
 }
 
-.logoIcon{
-    width:72px;
-    height:72px;
+.blobTop{
+    width:390px;
+    height:320px;
+    top:-155px;
+    right:-115px;
 
-    border-radius:22px;
+    border-radius:
+        50% 45% 55% 48%;
 
-    background:#171a23;
-    border:1px solid #373b47;
+    transform:rotate(-15deg);
+}
+
+.blobCenter{
+    width:320px;
+    height:320px;
+    top:270px;
+    left:50%;
+
+    transform:
+        translateX(-50%)
+        rotate(7deg);
+
+    border-radius:
+        43% 57% 49% 51%;
+}
+
+
+/* =====================================================
+   INTRO
+===================================================== */
+
+#intro{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+
+    background:
+        radial-gradient(
+            circle,
+            #211d29,
+            #0e0d11 75%
+        );
 
     display:flex;
     align-items:center;
     justify-content:center;
 
-    font-size:38px;
+    overflow:hidden;
 
-    margin:auto;
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
 }
 
-.logo h1{
-    margin-top:13px;
+#intro.hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
 
-    font-size:27px;
+
+/* =====================================================
+   INTRO BOARD
+===================================================== */
+
+.introBoard{
+    position:absolute;
+    z-index:5;
+
+    top:-230px;
+    left:50%;
+
+    width:min(350px,82vw);
+
+    padding:20px;
+
+    transform:
+        translateX(-50%)
+        rotate(-7deg);
+
+    border-radius:18px;
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #24212b,
+            #111015
+        );
+
+    border:2px solid #8b63df;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.8),
+        0 0 35px rgba(127,87,220,.25);
+
+    animation:
+        boardFall 1.25s
+        cubic-bezier(.18,.89,.32,1.28)
+        2.3s forwards;
+}
+
+.introBoard h1{
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size:35px;
     letter-spacing:1px;
 }
 
-.logo p{
+.introBoard p{
     margin-top:6px;
+    color:#bfa6ff;
+    font-size:10px;
+    letter-spacing:3px;
+}
 
-    color:#8e94a3;
-    font-size:12px;
+@keyframes boardFall{
+
+    0%{
+        top:-230px;
+
+        transform:
+            translateX(-50%)
+            rotate(-7deg);
+    }
+
+    70%{
+        top:36%;
+
+        transform:
+            translateX(-50%)
+            rotate(3deg);
+    }
+
+    85%{
+        top:32%;
+
+        transform:
+            translateX(-50%)
+            rotate(-1deg);
+    }
+
+    100%{
+        top:34%;
+
+        transform:
+            translateX(-50%)
+            rotate(0deg);
+    }
 }
 
 
-/* STATUS */
+/* =====================================================
+   MAIN APP
+===================================================== */
 
-.statusBox{
-    text-align:center;
+#mainApp{
+    position:relative;
+    z-index:2;
+
+    opacity:0;
+
+    transform:
+        translateY(25px)
+        scale(.97);
+
+    pointer-events:none;
+
+    transition:
+        opacity .7s ease,
+        transform .7s ease;
 }
 
-.status{
-    font-size:18px;
+#mainApp.show{
+    opacity:1;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    pointer-events:auto;
+}
+
+
+/* =====================================================
+   TOP HEADER
+===================================================== */
+
+.topHeader{
+    position:relative;
+    z-index:10;
+
+    height:90px;
+
+    padding:
+        27px
+        25px
+        0;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.brand{
+    font-size:20px;
     font-weight:bold;
+    letter-spacing:.2px;
 }
 
-.dot{
-    display:inline-block;
+.headerRight{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
 
+.fileButton{
+    width:43px;
+    height:43px;
+
+    border:0;
+    background:transparent;
+
+    color:#fff;
+    font-size:25px;
+
+    cursor:pointer;
+}
+
+.topConnection{
+    height:43px;
+
+    padding:
+        0
+        18px;
+
+    border-radius:24px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#28262c;
+    color:#fff;
+
+    font-size:13px;
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content{
+    position:relative;
+    z-index:5;
+
+    padding:
+        5px
+        24px
+        115px;
+}
+
+
+/* =====================================================
+   LOGO AREA
+===================================================== */
+
+.hero{
+    height:355px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    position:relative;
+}
+
+.heroLogo{
+    width:245px;
+    height:245px;
+
+    border-radius:
+        44%
+        56%
+        51%
+        49%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #583ed6,
+            #7048e2 45%,
+            #a74dc8
+        );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    position:relative;
+
+    transform:rotate(3deg);
+
+    box-shadow:
+        0 25px 55px rgba(0,0,0,.28);
+
+    overflow:hidden;
+}
+
+.heroLogo::after{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle at 25% 20%,
+            rgba(255,255,255,.18),
+            transparent 35%
+        );
+}
+
+
+/* لوگوی بدون عکس */
+
+.heroLetter{
+    position:relative;
+    z-index:2;
+
+    font-family:Arial,sans-serif;
+
+    font-size:125px;
+    font-weight:900;
+
+    line-height:1;
+
+    color:#fff;
+
+    letter-spacing:-10px;
+
+    text-shadow:
+        0 15px 25px rgba(0,0,0,.45);
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.statusArea{
+    text-align:center;
+    margin-top:-5px;
+}
+
+.statusText{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:9px;
+
+    font-size:37px;
+    font-weight:bold;
+
+    letter-spacing:-1px;
+}
+
+.statusDot{
     width:12px;
     height:12px;
 
@@ -116,468 +471,1274 @@ body{
 
     background:#e50914;
 
-    margin-left:7px;
-
     box-shadow:
-        0 0 14px rgba(229,9,20,.7);
+        0 0 15px rgba(229,9,20,.7);
 }
 
-.statusBox.connected .dot{
-    background:#20d66b;
+.statusArea.connected
+.statusDot{
+    background:#35d67a;
 
     box-shadow:
-        0 0 15px rgba(32,214,107,.75);
+        0 0 16px rgba(53,214,122,.8);
 }
 
-.serverName{
-    margin-top:10px;
+.statusArea.connecting
+.statusDot{
+    background:#f2b84b;
 
-    color:#8e94a3;
+    box-shadow:
+        0 0 16px rgba(242,184,75,.8);
+}
+
+.statusSub{
+    margin-top:8px;
+
+    color:#77737d;
+    font-size:11px;
+}
+
+
+/* =====================================================
+   TRAFFIC
+===================================================== */
+
+.traffic{
+    width:100%;
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:12px;
+
+    margin-top:39px;
+}
+
+.trafficCard{
+    height:150px;
+
+    padding:18px;
+
+    border-radius:27px;
+
+    background:#1d1b21;
+
+    border:1px solid
+        rgba(255,255,255,.025);
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.trafficTop{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    color:#d8d5dc;
     font-size:13px;
 }
 
+.trafficIcon{
+    width:35px;
+    height:35px;
 
-/* SERVER COUNT */
+    border-radius:11px;
 
-.serverCount{
-    margin-top:11px;
+    background:#302c36;
 
-    display:inline-flex;
+    display:flex;
     align-items:center;
     justify-content:center;
 
-    gap:5px;
+    color:#ddd8e2;
+    font-size:19px;
+}
 
-    padding:7px 15px;
+.speed{
+    font-family:Arial,sans-serif;
 
-    border-radius:12px;
+    font-size:27px;
+    font-weight:bold;
 
-    background:#171a23;
+    direction:ltr;
+    text-align:right;
+}
 
-    border:1px solid #292d38;
-
-    color:#ff3340;
-
+.speed small{
     font-size:12px;
+
+    color:#aaa5ae;
+
+    font-weight:normal;
 }
 
-.serverCount small{
-    color:#777e8d;
-    font-size:10px;
-}
-
-
-/* SELECTOR */
-
-.selector{
+.progress{
     width:100%;
+    height:6px;
+
+    background:#343139;
+
+    border-radius:10px;
+
+    overflow:hidden;
 }
 
-.label{
-    color:#8e94a3;
-
-    font-size:12px;
-
-    margin-bottom:8px;
-
+.progress span{
     display:block;
+
+    width:2%;
+    height:100%;
+
+    background:#68636f;
+
+    border-radius:10px;
 }
 
-.select{
+.total{
+    color:#c0bbc5;
+
+    font-family:Arial,sans-serif;
+
+    font-size:12px;
+
+    direction:ltr;
+    text-align:right;
+}
+
+
+/* =====================================================
+   SERVER CARD
+===================================================== */
+
+.serverCard{
     width:100%;
-    height:54px;
+    min-height:104px;
 
-    padding:0 15px;
+    margin-top:18px;
 
-    border-radius:15px;
+    padding:
+        16px
+        18px;
 
-    border:1px solid #303440;
+    border:0;
 
-    background:#171a23;
-
-    color:#fff;
-
-    font-family:inherit;
-    font-size:14px;
-
-    outline:none;
-}
-
-.select:focus{
-    border-color:#e50914;
-}
-
-.select:disabled{
-    opacity:.5;
-}
-
-
-/* CONNECT */
-
-.connectBtn{
-    width:180px;
-    height:180px;
-
-    border-radius:50%;
-
-    border:1px solid #3a3e49;
+    border-radius:28px;
 
     background:
-        radial-gradient(
-            circle,
-            #181b24,
-            #101219 70%
+        linear-gradient(
+            135deg,
+            #4b4569,
+            #39354f
         );
 
     color:#fff;
 
-    font-family:inherit;
+    display:flex;
+    align-items:center;
 
-    font-size:21px;
-    font-weight:bold;
+    gap:14px;
+
+    cursor:pointer;
+
+    text-align:right;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.serverCard::after{
+    content:"";
+
+    position:absolute;
+
+    width:130px;
+    height:130px;
+
+    left:-50px;
+    bottom:-75px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.06);
+}
+
+.serverIcon{
+    width:56px;
+    height:56px;
+
+    flex:none;
+
+    border-radius:20px;
+
+    background:#c5a8ff;
+    color:#2c2141;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:25px;
+}
+
+.serverInfo{
+    flex:1;
+}
+
+.serverInfo strong{
+    display:block;
+    font-size:15px;
+}
+
+.serverInfo span{
+    display:block;
+
+    margin-top:7px;
+
+    color:#c9c4d2;
+    font-size:10px;
+}
+
+.serverArrow{
+    font-size:29px;
+    color:#eeeaf2;
+}
+
+
+/* =====================================================
+   BIG CONNECT BUTTON
+===================================================== */
+
+.connectArea{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-top:24px;
+}
+
+.connectButton{
+    width:190px;
+    height:190px;
+
+    border-radius:50%;
+
+    border:2px solid #8f70e6;
+
+    background:
+        radial-gradient(
+            circle at 35% 28%,
+            #6b55c8,
+            #40376b 55%,
+            #29252f 100%
+        );
+
+    color:#fff;
+
+    display:flex;
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
 
     cursor:pointer;
 
     box-shadow:
-        0 0 0 8px rgba(229,9,20,.035),
-        0 0 55px rgba(229,9,20,.13);
 
-    transition:.25s;
+        0 0 0 9px
+        rgba(143,112,230,.05),
+
+        0 20px 55px
+        rgba(0,0,0,.5),
+
+        0 0 50px
+        rgba(129,92,222,.25);
+
+    transition:
+        transform .2s,
+        border-color .3s,
+        box-shadow .3s,
+        background .3s;
 }
 
-.connectBtn:active{
-    transform:scale(.96);
+.connectButton:active{
+    transform:scale(.94);
 }
 
-.connectBtn.connected{
-    border-color:#20d66b;
+.connectD{
+    font-family:Arial,sans-serif;
+
+    font-size:75px;
+    font-weight:900;
+
+    line-height:.9;
+
+    letter-spacing:-6px;
+
+    text-shadow:
+        0 5px 20px
+        rgba(0,0,0,.25);
+}
+
+.connectText{
+    margin-top:12px;
+
+    font-size:17px;
+    font-weight:bold;
+}
+
+
+/* در حال اتصال */
+
+.connectButton.connecting{
+    border-color:#efb74c;
+
+    animation:
+        connectPulse 1.15s
+        infinite;
 
     box-shadow:
-        0 0 0 8px rgba(32,214,107,.035),
-        0 0 55px rgba(32,214,107,.18);
+
+        0 0 0 9px
+        rgba(239,183,76,.05),
+
+        0 20px 55px
+        rgba(0,0,0,.5),
+
+        0 0 50px
+        rgba(239,183,76,.2);
 }
 
 
-/* IMPORT */
+/* متصل */
+
+.connectButton.connected{
+    border-color:#35d67a;
+
+    background:
+        radial-gradient(
+            circle at 35% 28%,
+            #42bd7b,
+            #2b8057 55%,
+            #19382a 100%
+        );
+
+    box-shadow:
+
+        0 0 0 9px
+        rgba(53,214,122,.05),
+
+        0 20px 55px
+        rgba(0,0,0,.5),
+
+        0 0 50px
+        rgba(53,214,122,.25);
+}
+
+@keyframes connectPulse{
+
+    0%,
+    100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.035);
+    }
+}
+
+
+/* =====================================================
+   IMPORT
+===================================================== */
 
 .importBox{
     width:100%;
 
-    padding:14px;
+    margin-top:18px;
 
-    border-radius:16px;
+    padding:16px;
 
-    background:#171a23;
+    border-radius:25px;
 
-    border:1px solid #292d38;
+    background:#1d1b21;
+
+    border:1px solid
+        rgba(255,255,255,.025);
+
+    display:none;
 }
 
 .importTitle{
-    font-size:13px;
+    font-size:14px;
     font-weight:bold;
 
-    margin-bottom:9px;
+    margin-bottom:10px;
 }
 
 .importInput{
     width:100%;
 
-    min-height:70px;
+    min-height:72px;
 
     resize:none;
 
     padding:11px;
 
-    border-radius:12px;
+    border-radius:14px;
 
-    border:1px solid #303440;
+    border:1px solid #302d36;
 
-    background:#101219;
+    background:#121116;
 
     color:#fff;
 
+    direction:ltr;
+
     font-family:Arial,sans-serif;
 
-    font-size:11px;
-
-    direction:ltr;
+    font-size:10px;
 
     outline:none;
 }
 
 .importInput:focus{
-    border-color:#e50914;
+    border-color:#9474e8;
 }
 
-.importBtn{
+.importButton{
     width:100%;
 
-    height:43px;
+    height:45px;
 
     margin-top:9px;
 
     border:0;
 
-    border-radius:12px;
+    border-radius:14px;
 
-    background:#e50914;
+    background:#302a3b;
 
     color:#fff;
 
-    font-family:inherit;
-
     font-size:13px;
-
     font-weight:bold;
 
     cursor:pointer;
-
-    transition:.2s;
-}
-
-.importBtn:active{
-    transform:scale(.97);
 }
 
 
-/* ACTIVE CONFIG */
+/* =====================================================
+   BOTTOM NAV
+===================================================== */
 
-.active{
-    width:100%;
+.bottomNav{
+    position:fixed;
 
-    padding:13px;
+    z-index:50;
 
-    border-radius:15px;
+    left:50%;
+    bottom:18px;
 
-    background:#171a23;
+    transform:
+        translateX(-50%);
 
-    border:1px solid #292d38;
+    width:min(390px,91vw);
 
-    text-align:center;
+    height:77px;
+
+    padding:8px;
+
+    border-radius:40px;
+
+    background:#1d1b20;
+
+    border:1px solid
+        rgba(255,255,255,.035);
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.55);
+
+    display:flex;
+
+    align-items:center;
+    justify-content:space-around;
 }
 
-.activeTitle{
-    color:#777e8d;
+.navButton{
+    height:60px;
 
-    font-size:11px;
+    min-width:58px;
 
-    margin-bottom:5px;
+    border:0;
+
+    border-radius:31px;
+
+    background:transparent;
+
+    color:#96919c;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+
+    font-size:22px;
 }
 
-.activeName{
-    font-size:14px;
+.navButton.active{
+    min-width:108px;
+
+    background:#c4a8ff;
+
+    color:#2b213a;
+
+    gap:8px;
+
+    font-size:21px;
+}
+
+.navLabel{
+    display:none;
+
+    font-size:13px;
     font-weight:bold;
 }
 
-.active.off{
-    opacity:.55;
+.navButton.active
+.navLabel{
+    display:inline;
 }
 
 
-/* FOOTER */
+/* =====================================================
+   SERVER MODAL
+===================================================== */
 
-.footer{
-    color:#5f6573;
+.modal{
+    position:fixed;
 
-    font-size:10px;
+    inset:0;
 
-    text-align:center;
+    z-index:100;
+
+    display:none;
+
+    align-items:flex-end;
+    justify-content:center;
+
+    background:
+        rgba(0,0,0,.72);
+
+    backdrop-filter:
+        blur(8px);
 }
 
-.footer a{
-    color:#ff3340;
-    text-decoration:none;
+.modal.show{
+    display:flex;
+}
+
+.modalBox{
+    width:min(500px,100%);
+
+    max-height:82vh;
+
+    overflow:auto;
+
+    padding:
+        24px
+        20px
+        35px;
+
+    border-radius:
+        30px
+        30px
+        0
+        0;
+
+    background:#1b191f;
+}
+
+.modalTitle{
+    font-size:18px;
+    font-weight:bold;
+
+    margin-bottom:17px;
+}
+
+.serverOption{
+    width:100%;
+
+    min-height:61px;
+
+    margin-bottom:9px;
+
+    padding:
+        0
+        15px;
+
+    border:1px solid #302d36;
+
+    border-radius:17px;
+
+    background:#252229;
+
+    color:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    cursor:pointer;
+
+    text-align:right;
+}
+
+.serverOption.selected{
+    border-color:#8c6de2;
+    background:#2b2637;
+}
+
+.optionRadio{
+    width:20px;
+    height:20px;
+
+    border-radius:50%;
+
+    border:2px solid #686270;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+}
+
+.serverOption.selected
+.optionRadio{
+    border-color:#ae8cff;
+}
+
+.serverOption.selected
+.optionRadio::after{
+    content:"";
+
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:#ae8cff;
+}
+
+.optionName{
+    flex:1;
+    font-size:13px;
+}
+
+.closeButton{
+    width:100%;
+
+    height:45px;
+
+    margin-top:7px;
+
+    border:0;
+
+    border-radius:14px;
+
+    background:#302c37;
+
+    color:#fff;
+
+    cursor:pointer;
 }
 
 
-/* MOBILE */
+/* =====================================================
+   TOAST
+===================================================== */
 
-@media(max-width:430px){
+.toast{
+    position:fixed;
+
+    z-index:200;
+
+    left:50%;
+    bottom:110px;
+
+    transform:
+        translate(-50%,20px);
+
+    padding:
+        12px
+        18px;
+
+    border-radius:15px;
+
+    background:#29262e;
+
+    border:1px solid #403b47;
+
+    color:#fff;
+
+    font-size:12px;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:.3s;
+
+    white-space:nowrap;
+}
+
+.toast.show{
+    opacity:1;
+
+    transform:
+        translate(-50%,0);
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:390px){
+
+    .topHeader{
+        padding-left:18px;
+        padding-right:18px;
+    }
+
+    .content{
+        padding-left:17px;
+        padding-right:17px;
+    }
+
+    .hero{
+        height:320px;
+    }
+
+    .heroLogo{
+        width:210px;
+        height:210px;
+    }
+
+    .heroLetter{
+        font-size:105px;
+    }
+
+    .statusText{
+        font-size:31px;
+    }
+
+    .trafficCard{
+        height:140px;
+        padding:15px;
+    }
+
+    .connectButton{
+        width:175px;
+        height:175px;
+    }
+
+    .connectD{
+        font-size:68px;
+    }
+}
+
+
+/* =====================================================
+   DESKTOP
+===================================================== */
+
+@media(min-width:501px){
 
     .app{
-        min-height:670px;
-        padding:24px 17px;
-    }
-
-    .connectBtn{
-        width:165px;
-        height:165px;
-    }
-
-    .logo h1{
-        font-size:24px;
+        box-shadow:
+            0 0 100px
+            rgba(0,0,0,.4);
     }
 
 }
+
 </style>
+
 </head>
+
 
 <body>
 
-<div class="app">
 
-    <!-- LOGO -->
+<!-- =====================================================
+     INTRO
+===================================================== -->
 
-    <div class="logo">
+<div id="intro">
 
-        <div class="logoIcon">
-            🕷️
-        </div>
+    <div class="introBoard">
 
         <h1>
-            SpaedrNG
+            Dark VPN
         </h1>
 
         <p>
-            VLESS VPN
+            FAST • SECURE • PRIVATE
         </p>
-
-    </div>
-
-
-    <!-- STATUS -->
-
-    <div
-        class="statusBox"
-        id="statusBox">
-
-        <div class="status">
-
-            <span class="dot"></span>
-
-            <span id="statusText">
-                قطع
-            </span>
-
-        </div>
-
-        <div
-            class="serverName"
-            id="serverName">
-
-            آماده اتصال
-
-        </div>
-
-        <div class="serverCount">
-
-            <span id="serverCount">
-                ۳
-            </span>
-
-            <small>
-                سرور
-            </small>
-
-        </div>
-
-    </div>
-
-
-    <!-- SERVER SELECT -->
-
-    <div class="selector">
-
-        <span class="label">
-            انتخاب سرور
-        </span>
-
-        <select
-            id="configSelect"
-            class="select">
-
-        </select>
-
-    </div>
-
-
-    <!-- CONNECT -->
-
-    <button
-        id="connectBtn"
-        class="connectBtn"
-        type="button">
-
-        اتصال
-
-    </button>
-
-
-    <!-- IMPORT -->
-
-    <div class="importBox">
-
-        <div class="importTitle">
-            📥 ایمپورت کانفیگ
-        </div>
-
-        <textarea
-            id="importInput"
-            class="importInput"
-            placeholder="VLESS را اینجا وارد کنید..."></textarea>
-
-        <button
-            id="importBtn"
-            class="importBtn"
-            type="button">
-
-            افزودن کانفیگ
-
-        </button>
-
-    </div>
-
-
-    <!-- ACTIVE -->
-
-    <div
-        id="activeBox"
-        class="active off">
-
-        <div class="activeTitle">
-            کانفیگ فعال
-        </div>
-
-        <div
-            id="activeName"
-            class="activeName">
-
-            هیچ کانفیگی فعال نیست
-
-        </div>
-
-    </div>
-
-
-    <!-- FOOTER -->
-
-    <div class="footer">
-
-        <a
-            href="https://t.me/spaedrNG"
-            target="_blank"
-            rel="noopener">
-
-            🕷️ کانال SpaedrNG
-
-        </a>
-
-        <div style="margin-top:5px;">
-            SpaedrNG • V2RayNG
-        </div>
 
     </div>
 
 </div>
 
 
+
+<!-- =====================================================
+     APP
+===================================================== -->
+
+<div
+    class="app"
+    id="mainApp">
+
+
+    <!-- BACKGROUND -->
+
+    <div class="blob blobTop"></div>
+
+    <div class="blob blobCenter"></div>
+
+
+
+    <!-- =================================================
+         HEADER
+    ================================================= -->
+
+    <header class="topHeader">
+
+        <div class="brand">
+            Dark VPN
+        </div>
+
+
+        <div class="headerRight">
+
+            <button
+                class="fileButton"
+                id="fileButton"
+                title="ایمپورت">
+
+                ▤
+
+            </button>
+
+
+            <div
+                class="topConnection"
+                id="topConnection">
+
+                متصل نیستید
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =================================================
+         CONTENT
+    ================================================= -->
+
+    <main class="content">
+
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div class="heroLogo">
+
+                <div class="heroLetter">
+                    D
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- STATUS -->
+
+        <section
+            class="statusArea"
+            id="statusArea">
+
+            <div class="statusText">
+
+                <span
+                    class="statusDot"
+                    id="statusDot">
+                </span>
+
+                <span id="statusText">
+                    متصل نیستید
+                </span>
+
+            </div>
+
+
+            <div
+                class="statusSub"
+                id="statusSub">
+
+                برای اتصال یک سرور انتخاب کنید
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             TRAFFIC
+        ================================================= -->
+
+        <section class="traffic">
+
+
+            <!-- DOWNLOAD -->
+
+            <div class="trafficCard">
+
+                <div class="trafficTop">
+
+                    <span>
+                        دانلود
+                    </span>
+
+                    <div class="trafficIcon">
+                        ↓
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="speed"
+                    id="downloadSpeed">
+
+                    0
+
+                    <small>
+                        B/s
+                    </small>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <span
+                        id="downloadProgress">
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="total"
+                    id="downloadTotal">
+
+                    0 B
+
+                </div>
+
+            </div>
+
+
+
+            <!-- UPLOAD -->
+
+            <div class="trafficCard">
+
+                <div class="trafficTop">
+
+                    <span>
+                        آپلود
+                    </span>
+
+                    <div class="trafficIcon">
+                        ↑
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="speed"
+                    id="uploadSpeed">
+
+                    0
+
+                    <small>
+                        B/s
+                    </small>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <span
+                        id="uploadProgress">
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="total"
+                    id="uploadTotal">
+
+                    0 B
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             SERVER CARD
+        ================================================= -->
+
+        <button
+            class="serverCard"
+            id="serverCard">
+
+
+            <div class="serverIcon">
+                ◉
+            </div>
+
+
+            <div class="serverInfo">
+
+                <strong
+                    id="selectedServer">
+
+                    🕷️ سرور ۱
+
+                </strong>
+
+
+                <span>
+                    برای تغییر سرور بزنید
+                </span>
+
+            </div>
+
+
+            <div class="serverArrow">
+                ‹
+            </div>
+
+
+        </button>
+
+
+
+        <!-- =================================================
+             BIG CONNECT BUTTON
+        ================================================= -->
+
+        <div class="connectArea">
+
+            <button
+                class="connectButton"
+                id="connectButton">
+
+                <div class="connectD">
+                    D
+                </div>
+
+                <div
+                    class="connectText"
+                    id="connectText">
+
+                    اتصال
+
+                </div>
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             IMPORT
+        ================================================= -->
+
+        <div
+            class="importBox"
+            id="importBox">
+
+
+            <div class="importTitle">
+                📥 ایمپورت کانفیگ
+            </div>
+
+
+            <textarea
+                id="importInput"
+                class="importInput"
+                placeholder="vless://...">
+            </textarea>
+
+
+            <button
+                class="importButton"
+                id="importButton">
+
+                افزودن کانفیگ
+
+            </button>
+
+
+        </div>
+
+
+    </main>
+
+
+
+    <!-- =================================================
+         BOTTOM NAV
+    ================================================= -->
+
+    <nav class="bottomNav">
+
+
+        <button
+            class="navButton"
+            id="settingsButton">
+
+            ⚙
+
+        </button>
+
+
+        <button
+            class="navButton">
+
+            ♢
+
+        </button>
+
+
+        <button
+            class="navButton"
+            id="serversButton">
+
+            ▤
+
+        </button>
+
+
+        <button
+            class="navButton active">
+
+            ⌂
+
+            <span class="navLabel">
+                خانه
+            </span>
+
+        </button>
+
+
+    </nav>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     SERVER MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="serverModal">
+
+
+    <div class="modalBox">
+
+
+        <div class="modalTitle">
+            انتخاب سرور
+        </div>
+
+
+        <div id="serverList"></div>
+
+
+        <button
+            class="closeButton"
+            id="closeButton">
+
+            بستن
+
+        </button>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     TOAST
+===================================================== -->
+
+<div
+    class="toast"
+    id="toast">
+
+    انجام شد
+
+</div>
+
+
+
 <script>
 
-/* =========================
+/* =====================================================
    DEFAULT CONFIGS
-========================= */
+===================================================== */
 
-const configs = [
+const defaultConfigs = [
 
     {
         name:"🕷️ سرور ۱",
@@ -598,128 +1759,375 @@ const configs = [
 
         vless:
         "vless://b30e1d14-0a07-4da0-a8fb-575fa11e2ca8@amirxf-production.up.railway.app:443?encryption=none&security=tls&type=ws&host=amirxf-production.up.railway.app&path=%2Fws%2Fb30e1d14-0a07-4da0-a8fb-575fa11e2ca8&sni=amirxf-production.up.railway.app&fp=chrome&alpn=http/1.1#SpaedrNG"
+    },
+
+    {
+        name:"🕷️ Dark Server",
+
+        vless:
+        "vless://7eee85ee-9973-47d5-8db5-293899412333@172.67.131.109:443?path=%2FeyJqdW5rIjoiMFAwMU1PNkNMZXV6ZG8iLCJwcm90b2NvbCI6InZsIiwibW9kZSI6InByb3h5YXAiLCJwYW5lbElQcyI6WyIxMzQuMjA5LjEzNi4xOTciXX0%3D%3Fed%3D2560&security=tls&alpn=h3%2Ch2%2Chttp%2F1.1&encryption=none&fm=%7B%0A%20%20%22scMaxEachPostBytes%22%3A%20%221200000-1800000%22%2C%0A%20%20%22scMinPostsIntervalMs%22%3A%20%2250%22%2C%0A%20%20%22xPaddingBytes%22%3A%20%22100-400%22%2C%0A%20%20%22xPaddingObfsMode%22%3A%20true%2C%0A%20%20%22xPaddingKey%22%3A%20%22cache_sr_v1_token%22%2C%0A%20%20%22xPaddingHeader%22%3A%20%22X-Cache%22%2C%0A%20%20%22xPaddingPlacement%22%3A%20%22queryInHeader%22%2C%0A%20%20%22xPaddingMethod%22%3A%20%22tokenish%22%2C%0A%20%20%22noGRPCHeader%22%3A%20true%2C%0A%20%20%22xmux%22%3A%20%7B%0A%20%20%20%20%22maxConcurrency%22%3A%20%228-16%22%2C%0A%20%20%20%20%22maxConnections%22%3A%20%220%22%2C%0A%20%20%20%20%22cMaxReuseTimes%22%3A%20%22150-250%22%2C%0A%20%20%20%20%22hMaxReusableSecs%22%3A%20%221800-2400%22%0A%20%20%7D%0A%7D&insecure=0&host=bpb.floki000.workers.dev&fp=chrome&ech=cloudflare-ech.com%2Budp%3A%2F%2F8.8.8.8&type=ws&allowInsecure=0&sni=BPB.flOKi000.woRKERs.DeV#Dark%20VPN"
     }
 
 ];
 
 
-/* =========================
+/* =====================================================
+   LOAD SAVED CONFIGS
+===================================================== */
+
+let configs = [...defaultConfigs];
+
+try{
+
+    const saved =
+        JSON.parse(
+            localStorage.getItem(
+                "darkVPNConfigs"
+            )
+        );
+
+    if(
+        Array.isArray(saved) &&
+        saved.length
+    ){
+
+        configs = saved;
+
+    }
+
+}catch(error){
+
+    console.log(error);
+
+}
+
+
+/* =====================================================
    ELEMENTS
-========================= */
+===================================================== */
 
-const connectBtn =
-    document.getElementById("connectBtn");
+const intro =
+    document.getElementById("intro");
 
-const configSelect =
-    document.getElementById("configSelect");
+const mainApp =
+    document.getElementById("mainApp");
 
-const statusBox =
-    document.getElementById("statusBox");
+const statusArea =
+    document.getElementById("statusArea");
 
 const statusText =
     document.getElementById("statusText");
 
-const serverName =
-    document.getElementById("serverName");
+const statusSub =
+    document.getElementById("statusSub");
 
-const activeBox =
-    document.getElementById("activeBox");
+const topConnection =
+    document.getElementById("topConnection");
 
-const activeName =
-    document.getElementById("activeName");
+const connectButton =
+    document.getElementById("connectButton");
 
-const serverCount =
-    document.getElementById("serverCount");
+const connectText =
+    document.getElementById("connectText");
+
+const selectedServer =
+    document.getElementById("selectedServer");
+
+const serverModal =
+    document.getElementById("serverModal");
+
+const serverList =
+    document.getElementById("serverList");
+
+const closeButton =
+    document.getElementById("closeButton");
+
+const serverCard =
+    document.getElementById("serverCard");
+
+const serversButton =
+    document.getElementById("serversButton");
+
+const fileButton =
+    document.getElementById("fileButton");
+
+const settingsButton =
+    document.getElementById("settingsButton");
+
+const importBox =
+    document.getElementById("importBox");
 
 const importInput =
     document.getElementById("importInput");
 
-const importBtn =
-    document.getElementById("importBtn");
+const importButton =
+    document.getElementById("importButton");
+
+const toast =
+    document.getElementById("toast");
 
 
-/* =========================
+/* =====================================================
    STATE
-========================= */
+===================================================== */
+
+let currentServer = 0;
 
 let connected = false;
 
 
-/* =========================
-   RENDER SERVERS
-========================= */
+/* =====================================================
+   INTRO
+===================================================== */
 
-function renderServers(){
-
-    configSelect.innerHTML = "";
-
-    configs.forEach(function(config,index){
-
-        const option =
-            document.createElement("option");
-
-        option.value = index;
-
-        option.textContent =
-            config.name;
-
-        configSelect.appendChild(option);
-
-    });
-
-    serverCount.textContent =
-        configs.length;
-
-}
-
-
-/* =========================
-   UPDATE SERVER
-========================= */
-
-function updateServer(){
-
-    const selected =
-        configs[
-            Number(configSelect.value)
-        ];
-
-    if(!selected) return;
-
-    serverName.textContent =
-        selected.name;
-
-}
-
-
-/* =========================
-   SELECT CHANGE
-========================= */
-
-configSelect.addEventListener(
-    "change",
+setTimeout(
     function(){
 
-        if(connected){
+        intro.classList.add("hide");
 
-            alert(
-                "ابتدا اتصال فعلی را قطع کنید."
-            );
+        mainApp.classList.add("show");
 
-            return;
-        }
-
-        updateServer();
-
-    }
+    },
+    4700
 );
 
 
-/* =========================
-   CONNECT BUTTON
-========================= */
+/* =====================================================
+   TOAST
+===================================================== */
 
-connectBtn.addEventListener(
+let toastTimer;
+
+function showToast(message){
+
+    toast.textContent =
+        message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(
+            function(){
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2200
+        );
+
+}
+
+
+/* =====================================================
+   SAVE CONFIGS
+===================================================== */
+
+function saveConfigs(){
+
+    try{
+
+        localStorage.setItem(
+            "darkVPNConfigs",
+            JSON.stringify(configs)
+        );
+
+    }catch(error){
+
+        console.log(error);
+
+    }
+
+}
+
+
+/* =====================================================
+   UPDATE SERVER NAME
+===================================================== */
+
+function updateSelectedServer(){
+
+    if(!configs[currentServer]){
+
+        currentServer = 0;
+
+    }
+
+    selectedServer.textContent =
+        configs[currentServer].name;
+
+}
+
+
+/* =====================================================
+   SERVER MODAL
+===================================================== */
+
+function openServers(){
+
+    renderServerList();
+
+    serverModal.classList.add(
+        "show"
+    );
+
+}
+
+
+function closeServers(){
+
+    serverModal.classList.remove(
+        "show"
+    );
+
+}
+
+
+function renderServerList(){
+
+    serverList.innerHTML = "";
+
+    configs.forEach(
+        function(config,index){
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.className =
+                "serverOption";
+
+            if(
+                index === currentServer
+            ){
+
+                button.classList.add(
+                    "selected"
+                );
+
+            }
+
+            button.innerHTML = `
+
+                <div class="optionRadio"></div>
+
+                <div class="optionName">
+                    ${escapeHTML(config.name)}
+                </div>
+
+            `;
+
+            button.addEventListener(
+                "click",
+                function(){
+
+                    if(connected){
+
+                        showToast(
+                            "ابتدا اتصال را قطع کنید"
+                        );
+
+                        return;
+
+                    }
+
+                    currentServer =
+                        index;
+
+                    updateSelectedServer();
+
+                    closeServers();
+
+                    showToast(
+                        "سرور انتخاب شد"
+                    );
+
+                }
+            );
+
+            serverList.appendChild(
+                button
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   HTML ESCAPE
+===================================================== */
+
+function escapeHTML(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   IMPORT PANEL
+===================================================== */
+
+function toggleImport(){
+
+    if(
+        importBox.style.display ===
+        "block"
+    ){
+
+        importBox.style.display =
+            "none";
+
+        return;
+
+    }
+
+    importBox.style.display =
+        "block";
+
+    setTimeout(
+        function(){
+
+            importBox.scrollIntoView({
+                behavior:"smooth",
+                block:"center"
+            });
+
+        },
+        100
+    );
+
+}
+
+
+fileButton.addEventListener(
+    "click",
+    toggleImport
+);
+
+
+settingsButton.addEventListener(
+    "click",
+    toggleImport
+);
+
+
+/* =====================================================
+   CONNECT BUTTON
+===================================================== */
+
+connectButton.addEventListener(
     "click",
     function(){
 
@@ -737,30 +2145,63 @@ connectBtn.addEventListener(
 );
 
 
-/* =========================
+/* =====================================================
    CONNECT
-========================= */
+===================================================== */
 
 function connect(){
 
     const selected =
-        configs[
-            Number(configSelect.value)
-        ];
+        configs[currentServer];
 
-    if(!selected) return;
+    if(!selected){
+
+        showToast(
+            "هیچ سروری انتخاب نشده"
+        );
+
+        return;
+
+    }
+
+
+    statusArea.classList.remove(
+        "connected"
+    );
+
+    statusArea.classList.add(
+        "connecting"
+    );
+
+
+    connectButton.classList.remove(
+        "connected"
+    );
+
+    connectButton.classList.add(
+        "connecting"
+    );
+
+
+    connectText.textContent =
+        "در حال اتصال...";
 
 
     statusText.textContent =
-        "در حال انتقال...";
+        "در حال اتصال";
 
-    serverName.textContent =
+
+    statusSub.textContent =
         selected.name;
 
 
+    topConnection.textContent =
+        "در حال اتصال";
+
+
     /*
-     * ارسال کانفیگ به V2RayNG
-     */
+       ساخت لینک V2RayNG
+    */
 
     const v2rayngURL =
         "v2rayng://install-config?url=" +
@@ -769,89 +2210,113 @@ function connect(){
         );
 
 
+    /*
+       باز کردن V2RayNG
+    */
+
     window.location.href =
         v2rayngURL;
 
 
-    setTimeout(function(){
+    /*
+       تغییر ظاهری رابط
+    */
 
-        connected = true;
+    setTimeout(
+        function(){
 
-        statusBox.classList.add(
-            "connected"
-        );
+            connected = true;
 
-        statusText.textContent =
-            "متصل";
 
-        serverName.textContent =
-            selected.name + " • فعال";
+            statusArea.classList.remove(
+                "connecting"
+            );
 
-        activeBox.classList.remove(
-            "off"
-        );
+            statusArea.classList.add(
+                "connected"
+            );
 
-        activeName.textContent =
-            selected.name;
 
-        connectBtn.classList.add(
-            "connected"
-        );
+            connectButton.classList.remove(
+                "connecting"
+            );
 
-        connectBtn.textContent =
-            "قطع";
+            connectButton.classList.add(
+                "connected"
+            );
 
-        configSelect.disabled =
-            true;
 
-    },1200);
+            connectText.textContent =
+                "متصل";
+
+
+            statusText.textContent =
+                "متصل";
+
+
+            statusSub.textContent =
+                selected.name;
+
+
+            topConnection.textContent =
+                "متصل هستید";
+
+        },
+        1400
+    );
 
 }
 
 
-/* =========================
+/* =====================================================
    DISCONNECT
-========================= */
+===================================================== */
 
 function disconnect(){
 
     connected = false;
 
-    statusBox.classList.remove(
-        "connected"
+
+    statusArea.classList.remove(
+        "connected",
+        "connecting"
     );
 
-    statusText.textContent =
-        "قطع";
 
-    serverName.textContent =
-        "آماده اتصال";
-
-    activeBox.classList.add(
-        "off"
+    connectButton.classList.remove(
+        "connected",
+        "connecting"
     );
 
-    activeName.textContent =
-        "هیچ کانفیگی فعال نیست";
 
-    connectBtn.classList.remove(
-        "connected"
-    );
-
-    connectBtn.textContent =
+    connectText.textContent =
         "اتصال";
 
-    configSelect.disabled =
-        false;
+
+    statusText.textContent =
+        "متصل نیستید";
+
+
+    statusSub.textContent =
+        "برای اتصال یک سرور انتخاب کنید";
+
+
+    topConnection.textContent =
+        "متصل نیستید";
+
+
+    showToast(
+        "اتصال قطع شد"
+    );
 
 }
 
 
-/* =========================
+/* =====================================================
    IMPORT CONFIG
-========================= */
+===================================================== */
 
-importBtn.addEventListener(
+importButton.addEventListener(
     "click",
     function(){
 
@@ -861,76 +2326,81 @@ importBtn.addEventListener(
 
         if(!value){
 
-            alert(
-                "لطفاً یک کانفیگ VLESS وارد کنید."
+            showToast(
+                "کانفیگ را وارد کنید"
             );
 
             return;
+
         }
 
 
         if(
-            !value.startsWith("vless://")
+            !value.startsWith(
+                "vless://"
+            )
         ){
 
-            alert(
-                "فقط کانفیگ VLESS قابل قبول است."
+            showToast(
+                "فقط کانفیگ VLESS قابل قبول است"
             );
 
             return;
+
         }
 
 
-        /*
-         * جلوگیری از کانفیگ تکراری
-         */
-
         const duplicate =
-            configs.some(function(config){
+            configs.some(
+                function(config){
 
-                return config.vless === value;
+                    return (
+                        config.vless === value
+                    );
 
-            });
+                }
+            );
 
 
         if(duplicate){
 
-            alert(
-                "این کانفیگ قبلاً اضافه شده است."
+            showToast(
+                "این کانفیگ قبلاً اضافه شده"
             );
 
             return;
+
         }
 
 
-        /*
-         * نام کانفیگ
-         */
-
         let name =
             "🕷️ سرور " +
-            (configs.length + 1);
+            (
+                configs.length + 1
+            );
 
-
-        /*
-         * استفاده از نام بعد از #
-         */
 
         try{
 
             const hash =
-                decodeURIComponent(
-                    value.split("#")[1] || ""
-                );
+                value.split("#")[1] || "";
+
 
             if(hash){
 
                 name =
-                    "🕷️ " + hash;
+                    "🕷️ " +
+                    decodeURIComponent(
+                        hash
+                    );
 
             }
 
-        }catch(e){}
+        }catch(error){
+
+            console.log(error);
+
+        }
 
 
         configs.push({
@@ -942,35 +2412,76 @@ importBtn.addEventListener(
         });
 
 
-        renderServers();
+        saveConfigs();
 
 
-        configSelect.value =
-            String(configs.length - 1);
+        currentServer =
+            configs.length - 1;
 
 
-        updateServer();
+        updateSelectedServer();
 
 
         importInput.value =
             "";
 
 
-        alert(
-            "کانفیگ با موفقیت اضافه شد."
+        importBox.style.display =
+            "none";
+
+
+        showToast(
+            "کانفیگ با موفقیت اضافه شد"
         );
 
     }
 );
 
 
-/* =========================
-   INITIALIZE
-========================= */
+/* =====================================================
+   SERVER CARD
+===================================================== */
 
-renderServers();
+serverCard.addEventListener(
+    "click",
+    openServers
+);
 
-updateServer();
+
+serversButton.addEventListener(
+    "click",
+    openServers
+);
+
+
+closeButton.addEventListener(
+    "click",
+    closeServers
+);
+
+
+serverModal.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target ===
+            serverModal
+        ){
+
+            closeServers();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   INITIAL
+===================================================== */
+
+updateSelectedServer();
 
 </script>
 
